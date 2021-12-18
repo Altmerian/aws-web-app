@@ -22,11 +22,13 @@ unit-tests:   # This job runs in the test stage.
   stage: test
   script:
   - echo "Running unit tests..."
+  - chmod +x gradlew
   - ./gradlew clean test
 
 build:       # This job runs in the build stage.
   stage: build   # It only starts when the job in the test stage completes successfully.
   script:
+  - chmod +x gradlew
   - ./gradlew build
   artifacts:
     paths:
