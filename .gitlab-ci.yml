@@ -33,7 +33,7 @@ build:       # This job runs in the build stage.
   - ./gradlew build
   artifacts:
     paths:
-    - /build/libs/aws-app-0.0.1-SNAPSHOT.jar
+    - build/libs/*.jar
 
 
 upload to s3:      # This job runs in the deploy stage.
@@ -43,7 +43,7 @@ upload to s3:      # This job runs in the deploy stage.
   script:
   - echo "Deploying application..."
   - aws configure set region $AWS_DEFAULT_REGION
-  - aws s3 cp /build/libs/aws-app-0.0.1-SNAPSHOT.jar s3://$S3_BUCKET/aws-app.jar
+  - aws s3 cp build/libs/aws-app-0.0.1-SNAPSHOT.jar s3://$S3_BUCKET/aws-app.jar
   - echo "Application successfully deployed."
   only:
   - master
