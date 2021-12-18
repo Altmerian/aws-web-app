@@ -21,7 +21,7 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.zalando:aws-support-spring-boot-starter:1.0.1'
+	implementation 'com.amazonaws:aws-java-sdk-core:1.12.129'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
