@@ -1,2 +1,4 @@
 rootProject.name = 'aws-app'
 include 'task-4-ec2'
+include 'task-7-rds'
+
