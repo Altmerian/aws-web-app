@@ -39,7 +39,7 @@ public class ImageController {
     return imageService.getRandom();
   }
 
-  @GetMapping(value = "/download/{name}", produces = MediaType.IMAGE_JPEG_VALUE)
+  @GetMapping(value = "/download/{name}", produces = MediaType.IMAGE_PNG_VALUE)
   public byte[] download(@PathVariable String name) {
     return imageService.getImage(name);
   }
