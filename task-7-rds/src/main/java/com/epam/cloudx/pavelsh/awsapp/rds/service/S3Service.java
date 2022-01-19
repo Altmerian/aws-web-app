@@ -32,7 +32,7 @@ public class S3Service {
     checkBucketExists();
     ObjectMetadata metadata = new ObjectMetadata();
     metadata.addUserMetadata("Name", filename);
-    metadata.setContentType("image/jpg");
+    metadata.setContentType("image/png");
     PutObjectRequest request = new PutObjectRequest(S3_BUCKET_NAME, customName, file, metadata);
     request.setMetadata(metadata);
     s3.putObject(request);
