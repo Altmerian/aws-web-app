@@ -3,8 +3,10 @@ package com.epam.cloudx.pavelsh.awsapp.rds.service;
 import static com.epam.cloudx.pavelsh.awsapp.rds.constant.Constants.S3_BUCKET_NAME;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.CreateBucketRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.Region;
 import com.amazonaws.services.s3.model.S3Object;
 import com.epam.cloudx.pavelsh.awsapp.rds.exception.S3ObjectNotFoundException;
 import java.io.InputStream;
@@ -44,7 +46,8 @@ public class S3Service {
 
   private void checkBucketExists() {
     if (!s3.doesBucketExistV2(S3_BUCKET_NAME)) {
-      s3.createBucket(S3_BUCKET_NAME);
+      var createBucketRequest = new CreateBucketRequest(S3_BUCKET_NAME, Region.EU_Frankfurt);
+      s3.createBucket(createBucketRequest);
     }
   }
 
