@@ -1,0 +1,23 @@
+s3:
+  bucket-name: aws-training-images-ulad-mos
+  region: us-west-2
+sns:
+  region: us-west-2
+  topic-arn: arn:aws:sns:us-west-2:088095515239:web-uploads-notification-queue
+sqs:
+  region: us-west-2
+  queue-url: https://sqs.us-west-2.amazonaws.com/088095515239/web-uploads-notification-queue
+lambda:
+  region: us-west-2
+  function-name: aws-training-uploads-batch-notifier
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/aws_training
+    username: test
+    password: test
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+flyway:
+  enabled: true
