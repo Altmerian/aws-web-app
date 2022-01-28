@@ -9,9 +9,9 @@ public interface NotificationService {
 
   void unsubscribeEmail(String email);
 
-  void sendMessageToQueue(String message);
+  void sendMessageToQueue(String message, String attributeValue);
 
-  void sendMessageToTopic(String message);
+  void sendMessageToTopic(String message, String attributeValue);
 
   List<Message> readMessages();
 }

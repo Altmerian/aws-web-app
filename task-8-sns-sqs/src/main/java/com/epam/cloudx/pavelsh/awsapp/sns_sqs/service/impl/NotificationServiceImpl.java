@@ -4,16 +4,20 @@ import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.model.AmazonSNSException;
 import com.amazonaws.services.sns.model.PublishRequest;
 import com.amazonaws.services.sns.model.SubscribeRequest;
+import com.amazonaws.services.sns.model.SubscribeResult;
 import com.amazonaws.services.sns.model.UnsubscribeRequest;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.AmazonSQSException;
 import com.amazonaws.services.sqs.model.Message;
+import com.amazonaws.services.sqs.model.MessageAttributeValue;
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
 import com.epam.cloudx.pavelsh.awsapp.sns_sqs.config.properties.SNSClientProperties;
 import com.epam.cloudx.pavelsh.awsapp.sns_sqs.config.properties.SQSClientProperties;
 import com.epam.cloudx.pavelsh.awsapp.sns_sqs.service.NotificationService;
+import com.epam.cloudx.pavelsh.awsapp.sns_sqs.sns.FilterPolicy;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,6 +27,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
 
+  public static final String MESSAGE_ATTRIBUTE_NAME = "image extension";
   private static final String SNS_PROTOCOL = "email";
 
   private final SNSClientProperties snsClientProperties;
@@ -38,7 +43,10 @@ public class NotificationServiceImpl implements NotificationService {
               .withProtocol(SNS_PROTOCOL)
               .withEndpoint(email)
               .withTopicArn(snsClientProperties.getTopicArn());
-      snsClient.subscribe(request);
+      SubscribeResult subscribeResult = snsClient.subscribe(request);
+      var filterPolicy = new FilterPolicy();
+      filterPolicy.addAttribute(MESSAGE_ATTRIBUTE_NAME, "png");
+      filterPolicy.apply(snsClient, subscribeResult.getSubscriptionArn());
     } catch (AmazonSNSException e) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
     }
@@ -59,12 +67,14 @@ public class NotificationServiceImpl implements NotificationService {
   }
 
   @Override
-  public void sendMessageToQueue(String message) {
+  public void sendMessageToQueue(String message, String attributeValue) {
     try {
+      var messageAttributeValueSQS = new MessageAttributeValue().withStringValue(attributeValue);
       var request =
           new SendMessageRequest()
               .withQueueUrl(sqsClientProperties.getQueueUrl())
               .withMessageBody(message)
+              .withMessageAttributes(Map.of(MESSAGE_ATTRIBUTE_NAME, messageAttributeValueSQS))
               .withDelaySeconds(5);
       sqsClient.sendMessage(request);
     } catch (AmazonSQSException e) {
@@ -73,10 +83,16 @@ public class NotificationServiceImpl implements NotificationService {
   }
 
   @Override
-  public void sendMessageToTopic(String message) {
+  public void sendMessageToTopic(String message, String attributeValue) {
     try {
+      var messageAttributeValueSNS =
+          new com.amazonaws.services.sns.model.MessageAttributeValue()
+              .withStringValue(attributeValue);
       var publishRequest =
-          new PublishRequest().withMessage(message).withTopicArn(snsClientProperties.getTopicArn());
+          new PublishRequest()
+              .withMessage(message)
+              .withMessageAttributes(Map.of(MESSAGE_ATTRIBUTE_NAME, messageAttributeValueSNS))
+              .withTopicArn(snsClientProperties.getTopicArn());
       snsClient.publish(publishRequest);
     } catch (AmazonSNSException e) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);

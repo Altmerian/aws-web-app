@@ -56,15 +56,16 @@ public class ImageServiceImpl implements ImageService {
               multipartFile.getInputStream(),
               new ObjectMetadata());
       upload.waitForUploadResult();
+      String fileExtension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
       var imageMetadata =
           ImageMetadata.builder()
-              .fileExtension(FilenameUtils.getExtension(multipartFile.getOriginalFilename()))
+              .fileExtension(fileExtension)
               .name(multipartFile.getOriginalFilename())
               .sizeInBytes(multipartFile.getSize())
               .lastUpdateDate(Instant.now())
               .build();
-      //      imageMetadataRepository.saveAndFlush(imageMetadata);
-      notificationService.sendMessageToQueue(createMessage(imageMetadata));
+      imageMetadataRepository.saveAndFlush(imageMetadata);
+      notificationService.sendMessageToQueue(createMessage(imageMetadata), fileExtension);
     } catch (IOException | InterruptedException e) {
       delete(multipartFile.getOriginalFilename());
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
