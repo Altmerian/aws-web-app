@@ -1,18 +1,21 @@
+server:
+  port: 8081
+
 s3:
-  bucket-name: aws-training-images-ulad-mos
-  region: us-west-2
+  bucket-name: pavel-shakhlovich-images
+  region: eu-central-1
 sns:
-  region: us-west-2
-  topic-arn: arn:aws:sns:us-west-2:088095515239:web-uploads-notification-queue
+  topic-arn: arn:aws:sns:eu-central-1:150063193970:task-8-uploads-notification-topic
+  region: eu-central-1
 sqs:
-  region: us-west-2
-  queue-url: https://sqs.us-west-2.amazonaws.com/088095515239/web-uploads-notification-queue
+  queue-url: https://sqs.eu-central-1.amazonaws.com/150063193970/task-8-uploads-notification-queue
+  region: eu-central-1
 lambda:
-  region: us-west-2
   function-name: aws-training-uploads-batch-notifier
+  region: eu-central-1
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/aws_training
+    url: jdbc:mysql://aws.ldsfjljlasdfj/asdfjaldfjlsdfj
     username: test
     password: test
   jpa:

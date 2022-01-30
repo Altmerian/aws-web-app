@@ -20,6 +20,11 @@ public class NotificationController {
     notificationService.subscribeEmail(email);
   }
 
+  @PostMapping("/subscriptions/{email}/apply-filter")
+  public void applyFilter(@PathVariable String email) {
+    notificationService.applyFilter(email);
+  }
+
   @DeleteMapping("/subscriptions/{email}")
   public void unsubscribeEmail(@PathVariable String email) {
     notificationService.unsubscribeEmail(email);

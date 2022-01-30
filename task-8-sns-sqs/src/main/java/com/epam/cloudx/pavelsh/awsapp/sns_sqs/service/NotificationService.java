@@ -14,4 +14,6 @@ public interface NotificationService {
   void sendMessageToTopic(String message, String attributeValue);
 
   List<Message> readMessages();
+
+  void applyFilter(String email);
 }

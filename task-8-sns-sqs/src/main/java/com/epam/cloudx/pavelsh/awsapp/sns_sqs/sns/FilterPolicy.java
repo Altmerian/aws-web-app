@@ -25,7 +25,7 @@ public class FilterPolicy {
 
   private String formatFilterPolicy() {
     return filterPolicy.entrySet().stream()
-        .map(entry -> "\"" + entry.getKey() + "\": [" + entry.getValue() + "]")
+        .map(entry -> "\"" + entry.getKey() + "\": [\"" + entry.getValue().getStringValue() + "\"]")
         .collect(Collectors.joining(", ", "{", "}"));
   }
 }
