@@ -15,7 +15,7 @@ lambda:
   region: eu-central-1
 spring:
   datasource:
-    url: jdbc:mysql://imagestask7.cwgkijgrn5hx.eu-central-1.rds.amazonaws.com:3306/snsSqsTask8
+    url: jdbc:mysql://snssqstask8.cwgkijgrn5hx.eu-central-1.rds.amazonaws.com:3306/snsSqsTask8
     username: test
     password: test
   jpa:
