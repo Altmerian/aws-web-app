@@ -11,7 +11,7 @@ sqs:
   queue-url: https://sqs.eu-central-1.amazonaws.com/150063193970/task-9-uploads-notification-queue
   region: eu-central-1
 lambda:
-  function-name: aws-training-uploads-batch-notifier
+  function-name: Task-9-uploads-batch-notifier
   region: eu-central-1
 spring:
   datasource:
