@@ -9,7 +9,7 @@ jar {
 }
 
 allprojects {
-    group = 'com.epam.cloudx.pavel-sh'
+    group = 'com.epam.cloudx.pavelsh'
     version = '0.0.1-SNAPSHOT'
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17

@@ -39,6 +39,8 @@ build:
       - task-4-ec2/build/libs/*.jar
       - task-7-rds/build/libs/*.jar
       - task-8-sns-sqs/build/libs/*.jar
+      - task-9-lambda-1/build/distributions/task-9-lambda-1-0.0.1-SNAPSHOT.zip
+      - task-9-lambda-2/build/distributions/task-9-lambda-2-0.0.1-SNAPSHOT.zip
 
 upload to s3:
   stage: deploy
@@ -50,7 +52,7 @@ upload to s3:
     - aws s3 cp task-4-ec2/build/libs/task-4-ec2-0.0.1-SNAPSHOT.jar s3://$S3_BUCKET/task-4-ec2-0.0.1-SNAPSHOT.jar
     - aws s3 cp task-7-rds/build/libs/task-7-rds-0.0.1-SNAPSHOT.jar s3://$S3_BUCKET/task-7-rds-0.0.1-SNAPSHOT.jar
     - aws s3 cp task-8-sns-sqs/build/libs/task-8-sns-sqs-0.0.1-SNAPSHOT.jar s3://$S3_BUCKET/task-8-sns-sqs-0.0.1-SNAPSHOT.jar
-#    - aws s3 cp task-9-lambda-1/build/distributions/task-9-lambda-1-0.0.1-SNAPSHOT.zip s3://$S3_BUCKET/task-9-lambda-1-0.0.1-SNAPSHOT.zip
-#    - aws s3 cp task-9-lambda-2/build/distributions/task-9-lambda-2-0.0.1-SNAPSHOT.zip s3://$S3_BUCKET/task-9-lambda-2-0.0.1-SNAPSHOT.zip
+    - aws s3 cp task-9-lambda-1/build/distributions/task-9-lambda-1-0.0.1-SNAPSHOT.zip s3://$S3_BUCKET/task-9-lambda-1-0.0.1-SNAPSHOT.zip
+    - aws s3 cp task-9-lambda-2/build/distributions/task-9-lambda-2-0.0.1-SNAPSHOT.zip s3://$S3_BUCKET/task-9-lambda-2-0.0.1-SNAPSHOT.zip
   only:
     - master
