@@ -12,8 +12,9 @@ task buildLayerZip(type: Zip) {
     into('java/lib') {
         from configurations.runtimeClasspath
         exclude(
-                "**com.epam.cloudx.pavelsh**",
-                "**awsapp**",
+                "**tomcat**",
+                "**spring**",
+                "**netty**",
                 "**ec2**",
                 "**sagemaker**",
                 "**iot**",
